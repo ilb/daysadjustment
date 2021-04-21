@@ -136,6 +136,7 @@ DaysAdjustment.prototype.isWorkDay = function (date) {
  * @returns
  */
 DaysAdjustment.prototype.getNextWorkDay = function (date) {
+  date = new Date(date);
   while (this.isFreeDay(date)) {
     date.setDate(date.getDate() + 1);
   }
@@ -148,6 +149,7 @@ DaysAdjustment.prototype.getNextWorkDay = function (date) {
  * @returns
  */
 DaysAdjustment.prototype.addWorkDay = function (date, count) {
+  date = new Date(date);
   let added = 0;
   while (added < count) {
     date.setDate(date.getDate() + 1);
