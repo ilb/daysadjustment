@@ -1,4 +1,4 @@
-const { DaysAdjustment } = require("../src/DaysAdjustment.js");
+const DaysAdjustment = require("../src/DaysAdjustment.js");
 
 const limitDate = new Date(2022, 0, 1);
 const da = new DaysAdjustment({ limitDate });

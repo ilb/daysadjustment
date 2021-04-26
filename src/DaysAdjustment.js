@@ -160,4 +160,4 @@ DaysAdjustment.prototype.addWorkDay = function (date, count) {
   return date;
 };
 
-module.exports = { DaysAdjustment };
+module.exports = DaysAdjustment;
