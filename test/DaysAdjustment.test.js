@@ -38,3 +38,10 @@ test("addWorkDay", () => {
     new Date(2021, 0, 26)
   );
 });
+
+test('countWorkDay', () => {
+  expect(da.countWorkDay(new Date(2022, 3, 24), new Date(2022, 3, 24))).toStrictEqual(1);
+  expect(da.countWorkDay(new Date(2022, 3, 24), new Date(2022, 3, 25))).toStrictEqual(2);
+
+  expect(da.countWorkDay(new Date(2022, 3, 14), new Date(2022, 3, 20))).toStrictEqual(5);
+});

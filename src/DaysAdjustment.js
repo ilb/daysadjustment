@@ -1,30 +1,30 @@
-const { DateEntity, plusDays } = require("./DateEntity.js");
+const { DateEntity, plusDays } = require('./DateEntity.js');
 
 const config = {
-  weekend: ["2004-01-04/P7D", "2013-03-30/P7D"],
+  weekend: ['2004-01-04/P7D', '2013-03-30/P7D'],
   holiday: [
-    "2004-01-01/P1Y/2011-12-01",
-    "2013-01-01/P1Y",
-    "2004-01-02/P1Y",
-    "2004-01-03/P1Y",
-    "2004-01-04/P1Y",
-    "2004-01-05/P1Y",
-    "2004-01-06/P1Y",
-    "2004-01-07/P1Y/2013-12-01",
-    "2004-01-08/P1Y/2011-12-01",
-    "2004-01-09/P1Y/2012-12-01",
-    "2004-02-23/P1Y",
-    "2004-03-08/P1Y",
-    "2004-05-01/P1Y",
-    "2019-05-02/P1Y",
-    "2019-05-03/P1Y",
-    "2004-05-09/P1Y",
-    "2019-05-10/P1Y",
-    "2004-06-12/P1Y",
-    "2004-11-04/P1Y",
-    "2013-05-02",
-    "2013-05-03",
-    "2013-05-10",
+    '2004-01-01/P1Y/2011-12-01',
+    '2013-01-01/P1Y',
+    '2004-01-02/P1Y',
+    '2004-01-03/P1Y',
+    '2004-01-04/P1Y',
+    '2004-01-05/P1Y',
+    '2004-01-06/P1Y',
+    '2004-01-07/P1Y/2013-12-01',
+    '2004-01-08/P1Y/2011-12-01',
+    '2004-01-09/P1Y/2012-12-01',
+    '2004-02-23/P1Y',
+    '2004-03-08/P1Y',
+    '2004-05-01/P1Y',
+    '2019-05-02/P1Y',
+    '2019-05-03/P1Y',
+    '2004-05-09/P1Y',
+    '2019-05-10/P1Y',
+    '2004-06-12/P1Y',
+    '2004-11-04/P1Y',
+    '2013-05-02',
+    '2013-05-03',
+    '2013-05-10',
   ],
 };
 
@@ -160,4 +160,22 @@ DaysAdjustment.prototype.addWorkDay = function (date, count) {
   return date;
 };
 
+/**
+ * посчитать количество рабочих дней в промежутке между датами (обе даты интервала - включительно)
+ * @param {*} date дата начала интервала
+ * @param {*} endDate дата конца интервала
+ * @returns
+ */
+DaysAdjustment.prototype.countWorkDay = function (date, endDate) {
+  date = new Date(date);
+  endDate = new Date(endDate);
+  let workDayCount = 0;
+  while (date <= endDate) {
+    date.setDate(date.getDate() + 1);
+    if (this.isWorkDay(date)) {
+      workDayCount++;
+    }
+  }
+  return workDayCount;
+};
 module.exports = DaysAdjustment;
