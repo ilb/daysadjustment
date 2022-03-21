@@ -1,20 +1,20 @@
-const DaysAdjustment = require("../src/DaysAdjustment.js");
+const DaysAdjustment = require('../src/DaysAdjustment.js');
 
 const limitDate = new Date(2022, 0, 1);
 const da = new DaysAdjustment({ limitDate });
-test("isHD", () => {
+test('isHD', () => {
   expect(da.isHD(new Date(2021, 0, 1))).toStrictEqual(true);
   expect(da.isHD(new Date(2021, 4, 1))).toStrictEqual(true);
   expect(da.isHD(new Date(2021, 3, 30))).toStrictEqual(false);
 });
 
-test("isWE", () => {
+test('isWE', () => {
   expect(da.isWE(new Date(2021, 3, 24))).toStrictEqual(true);
   expect(da.isWE(new Date(2021, 3, 25))).toStrictEqual(true);
   expect(da.isWE(new Date(2021, 3, 23))).toStrictEqual(false);
 });
 
-test("getNextWorkDay", () => {
+test('getNextWorkDay', () => {
   expect(da.getNextWorkDay(new Date(2021, 3, 24))).toStrictEqual(
     new Date(2021, 3, 26)
   );
@@ -26,7 +26,7 @@ test("getNextWorkDay", () => {
   );
 });
 
-test("addWorkDay", () => {
+test('addWorkDay', () => {
   expect(da.addWorkDay(new Date(2021, 3, 24), 1)).toStrictEqual(
     new Date(2021, 3, 26)
   );
@@ -40,8 +40,13 @@ test("addWorkDay", () => {
 });
 
 test('countWorkDay', () => {
-  expect(da.countWorkDay(new Date(2022, 3, 24), new Date(2022, 3, 24))).toStrictEqual(1);
-  expect(da.countWorkDay(new Date(2022, 3, 24), new Date(2022, 3, 25))).toStrictEqual(2);
-
-  expect(da.countWorkDay(new Date(2022, 3, 14), new Date(2022, 3, 20))).toStrictEqual(5);
+  expect(
+    da.countWorkDay(new Date(2022, 2, 26), new Date(2022, 2, 27))
+  ).toStrictEqual(0);
+  expect(
+    da.countWorkDay(new Date(2022, 2, 24), new Date(2022, 2, 25))
+  ).toStrictEqual(2);
+  expect(
+    da.countWorkDay(new Date(2022, 3, 14), new Date(2022, 3, 20))
+  ).toStrictEqual(5);
 });
