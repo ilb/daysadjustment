@@ -81,6 +81,7 @@ function DaysAdjustment({ limitDate }) {
  */
 DaysAdjustment.prototype.isWE = function (date) {
   var res = false;
+
   if (date.getDay() == 0 || date.getDay() == 6) {
     // если воскресенье - сразу true
     res = true;
@@ -94,6 +95,7 @@ DaysAdjustment.prototype.isWE = function (date) {
       res = true;
     }
   }
+  // console.log(res);
   return res;
 };
 
@@ -171,10 +173,10 @@ DaysAdjustment.prototype.countWorkDay = function (date, endDate) {
   endDate = new Date(endDate);
   let workDayCount = 0;
   while (date <= endDate) {
-    date.setDate(date.getDate() + 1);
     if (this.isWorkDay(date)) {
       workDayCount++;
     }
+    date.setDate(date.getDate() + 1);
   }
   return workDayCount;
 };
