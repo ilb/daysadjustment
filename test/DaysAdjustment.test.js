@@ -2,10 +2,12 @@ const DaysAdjustment = require('../src/DaysAdjustment.js');
 
 const limitDate = new Date(2022, 0, 1);
 const da = new DaysAdjustment({ limitDate });
+
 test('isHD', () => {
   expect(da.isHD(new Date(2021, 0, 1))).toStrictEqual(true);
   expect(da.isHD(new Date(2021, 4, 1))).toStrictEqual(true);
   expect(da.isHD(new Date(2021, 3, 30))).toStrictEqual(false);
+  expect(da.isHD(new Date(2024, 4, 10))).toStrictEqual(true);
 });
 
 test('isWE', () => {

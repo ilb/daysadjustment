@@ -26,6 +26,7 @@ const config = {
     '2019-05-10/P1Y/2022-12-01',
     '2004-06-12/P1Y',
     '2004-11-04/P1Y',
+    '2024-05-10/P1Y/2024-12-01',
   ],
 };
 
@@ -107,6 +108,7 @@ DaysAdjustment.prototype.isWE = function (date) {
 DaysAdjustment.prototype.isHD = function (date) {
   var res = false;
   var d = new Date(date.getTime());
+
   d.setHours(0);
   d.setMinutes(0);
   d.setSeconds(0);
