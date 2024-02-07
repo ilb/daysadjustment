@@ -8,6 +8,8 @@ test('isHD', () => {
   expect(da.isHD(new Date(2021, 4, 1))).toStrictEqual(true);
   expect(da.isHD(new Date(2021, 3, 30))).toStrictEqual(false);
   expect(da.isHD(new Date(2024, 4, 10))).toStrictEqual(true);
+  expect(da.isHD(new Date('2024-05-09'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2024-05-01'))).toStrictEqual(true);
 });
 
 test('isWE', () => {
@@ -25,6 +27,12 @@ test('getNextWorkDay', () => {
   );
   expect(da.getNextWorkDay(new Date(2021, 0, 1))).toStrictEqual(
     new Date(2021, 0, 11)
+  );
+  expect(da.getNextWorkDay(new Date('2024-05-09'))).toStrictEqual(
+    new Date('2024-05-13')
+  );
+  expect(da.getNextWorkDay(new Date('2024-05-01'))).toStrictEqual(
+    new Date('2024-05-02')
   );
 });
 
