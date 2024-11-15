@@ -10,12 +10,27 @@ test('isHD', () => {
   expect(da.isHD(new Date(2024, 4, 10))).toStrictEqual(true);
   expect(da.isHD(new Date('2024-05-09'))).toStrictEqual(true);
   expect(da.isHD(new Date('2024-05-01'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-01-08'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-04-29'))).toStrictEqual(false);
+  expect(da.isHD(new Date('2025-04-30'))).toStrictEqual(false);
+  expect(da.isHD(new Date('2025-05-01'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-05-02'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-05-03'))).toStrictEqual(false);
+  expect(da.isHD(new Date('2025-05-08'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-05-09'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-06-12'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-06-13'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-11-03'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-11-04'))).toStrictEqual(true);
+  expect(da.isHD(new Date('2025-12-31'))).toStrictEqual(true);
 });
 
 test('isWE', () => {
   expect(da.isWE(new Date(2021, 3, 24))).toStrictEqual(true);
   expect(da.isWE(new Date(2021, 3, 25))).toStrictEqual(true);
   expect(da.isWE(new Date(2021, 3, 23))).toStrictEqual(false);
+  expect(da.isWE(new Date('2025-02-23'))).toStrictEqual(true);
+  expect(da.isWE(new Date('2025-03-08'))).toStrictEqual(true);
 });
 
 test('getNextWorkDay', () => {
