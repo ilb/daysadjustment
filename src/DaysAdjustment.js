@@ -1,7 +1,8 @@
-const { DateEntity, plusDays } = require('./DateEntity.js');
+const { DateEntity } = require('./DateEntity.js');
 
 const config = {
   weekend: ['2004-01-04/P7D', '2013-03-30/P7D'],
+  workingWeekend: ['2025-11-01'],
   holiday: [
     '2004-01-01',
     '2013-01-01/P1Y',
@@ -51,8 +52,8 @@ const config = {
 };
 
 function DaysAdjustment({ limitDate }) {
-  /** weekends */
-  this.WE = {};
+  /** working weekends */
+  this.workingWeekend = {};
   /** holidays */
   this.HD = {};
   if (!limitDate) {
@@ -61,39 +62,22 @@ function DaysAdjustment({ limitDate }) {
     limitDate.setFullYear(limitDate.getFullYear() + 1);
   }
 
-  var sundays = [];
-  var saturdays = [];
-
   for (const rfc3339_value of config.holiday) {
     const de = new DateEntity();
     de.parseRfcString(rfc3339_value, DateEntity.PRECISION_DAY);
     //this.HD = this.HD.concat(de.getDates(curr30));
-    dates = de.getDates(limitDate);
+    const dates = de.getDates(limitDate);
     for (j = 0; j < dates.length; ++j) {
       this.HD[dates[j].getTime()] = rfc3339_value;
-      // запоминаем воскресенья, пришедшиеся на праздники
-      if (dates[j].getDay() == 0) {
-        sundays.push(dates[j]);
-      }
-      // T86436 запоминаем субботы, пришедшиеся на праздники
-      if (dates[j].getDay() == 6) {
-        saturdays.push(dates[j]);
-      }
     }
+  }
 
-    for (j = 0; j < sundays.length; ++j) {
-      // переносим выходные, пришедшиеся на праздники
-      while (this.isHD(sundays[j])) {
-        sundays[j] = plusDays(sundays[j], 1);
-      }
-      this.WE[sundays[j].getTime()] = rfc3339_value;
-    }
-    for (j = 0; j < saturdays.length; ++j) {
-      // переносим выходные, пришедшиеся на праздники
-      while (this.isHD(saturdays[j])) {
-        saturdays[j] = plusDays(saturdays[j], 2);
-      }
-      this.WE[saturdays[j].getTime()] = rfc3339_value;
+  for (const rfc3339_value of config.workingWeekend) {
+    const de = new DateEntity();
+    de.parseRfcString(rfc3339_value, DateEntity.PRECISION_DAY);
+    const dates = de.getDates(limitDate);
+    for (j = 0; j < dates.length; ++j) {
+      this.workingWeekend[dates[j].getTime()] = rfc3339_value;
     }
   }
 }
@@ -102,19 +86,20 @@ function DaysAdjustment({ limitDate }) {
  * @return true - выходной день<br/>false - не выходной день
  */
 DaysAdjustment.prototype.isWE = function (date) {
-  var res = false;
+  let res = false;
 
+  const d = new Date(date.getTime());
+  d.setHours(0);
+  d.setMinutes(0);
+  d.setSeconds(0);
+  d.setMilliseconds(0);
+
+  // если воскресенье или суббота - true (исключая рабочие субботы)
   if (date.getDay() == 0 || date.getDay() == 6) {
-    // если воскресенье - сразу true
-    res = true;
-  } else {
-    var d = new Date(date.getTime());
-    d.setHours(0);
-    d.setMinutes(0);
-    d.setSeconds(0);
-    d.setMilliseconds(0);
-    if (this.WE[d.getTime()] != null) {
+    if (this.workingWeekend[d.getTime()] == null) {
       res = true;
+    } else {
+      res = false;
     }
   }
   // console.log(res);
@@ -126,8 +111,8 @@ DaysAdjustment.prototype.isWE = function (date) {
  * @return true - выходной день<br/>false - не выходной день
  */
 DaysAdjustment.prototype.isHD = function (date) {
-  var res = false;
-  var d = new Date(date.getTime());
+  let res = false;
+  const d = new Date(date.getTime());
 
   d.setHours(0);
   d.setMinutes(0);
