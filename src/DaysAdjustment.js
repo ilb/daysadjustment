@@ -86,9 +86,9 @@ function DaysAdjustment({ limitDate }) {
  * @return true - выходной день<br/>false - не выходной день
  */
 DaysAdjustment.prototype.isWE = function (date) {
-  var res = false;
+  let res = false;
 
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   d.setHours(0);
   d.setMinutes(0);
   d.setSeconds(0);
@@ -111,8 +111,8 @@ DaysAdjustment.prototype.isWE = function (date) {
  * @return true - выходной день<br/>false - не выходной день
  */
 DaysAdjustment.prototype.isHD = function (date) {
-  var res = false;
-  var d = new Date(date.getTime());
+  let res = false;
+  const d = new Date(date.getTime());
 
   d.setHours(0);
   d.setMinutes(0);

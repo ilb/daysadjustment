@@ -1,6 +1,6 @@
 function getEndOfMonth(date) {
-  var d = new Date(date.getTime());
-  var days = d.getMonthDays(d.getMonth());
+  const d = new Date(date.getTime());
+  const days = d.getMonthDays(d.getMonth());
   d.setDate(days);
   return d;
 }
@@ -10,40 +10,40 @@ function getMaxDayOfYear(date) {
 }
 
 function plusDays(date, days) {
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   d.setDate(d.getDate() + days);
   return d;
 }
 
 function minusDays(date, days) {
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   d.setDate(d.getDate() - days);
   return d;
 }
 
 function plusMonths(date, months) {
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   d.setMonth(d.getMonth() + months, d.getDate());
   return d;
 }
 
 function daysInMonth(date) {
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   return 33 - new Date(d.getFullYear(), d.getMonth(), 33).getDate();
 }
 
 function plusMonthsAsSql(date, months) {
-  var d = new Date(date.getTime());
-  var day = d.getDate();
+  const d = new Date(date.getTime());
+  const day = d.getDate();
   d.setDate(1);
   d.setMonth(d.getMonth() + months);
-  var max = daysInMonth(d);
+  const max = daysInMonth(d);
   d.setDate(day > max ? max : day);
   return d;
 }
 
 function plusYears(date, years) {
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   d.setFullYear(d.getFullYear() + years);
   return d;
 }
@@ -51,13 +51,13 @@ function plusYears(date, years) {
 function getAddMonthForSoglasie(startDate, loanPeriod) {
   loanPeriod = parseInt(loanPeriod, 10);
   //дата начала действия договора страхования
-  var startIns = plusDays(startDate, 1);
+  const startIns = plusDays(startDate, 1);
   //дата окончания действия договора страхования
-  var endDate = plusMonthsAsSql(startDate, loanPeriod);
+  const endDate = plusMonthsAsSql(startDate, loanPeriod);
 
-  var endDate2 = getEndOfMonth(endDate);
+  const endDate2 = getEndOfMonth(endDate);
 
-  var dateCalcStr =
+  const dateCalcStr =
     endDate.getFullYear() +
     "/" +
     (endDate.getMonth() + 1) +
@@ -66,15 +66,15 @@ function getAddMonthForSoglasie(startDate, loanPeriod) {
       ? startIns.getDate()
       : endDate2.getDate());
 
-  var dateCalc = new Date(dateCalcStr);
+  const dateCalc = new Date(dateCalcStr);
 
-  var ceilMonth =
+  const ceilMonth =
     (dateCalc.getFullYear() - startIns.getFullYear()) * 12 +
     (dateCalc.getMonth() - startIns.getMonth());
 
-  var endDate3 = plusDays(endDate, 1);
+  const endDate3 = plusDays(endDate, 1);
 
-  var addMonth;
+  let addMonth;
 
   if (endDate3 > dateCalc) {
     addMonth = 1;
@@ -97,9 +97,9 @@ function round(value, scale) {
 }
 
 function mathRound(value, scale) {
-  var d = 1;
+  let d = 1;
   if (scale > 0) {
-    for (var i = 1; i <= scale; i++) {
+    for (let i = 1; i <= scale; i++) {
       d = d * 10;
     }
   }
@@ -107,14 +107,14 @@ function mathRound(value, scale) {
 }
 
 function roundHalfUpPrecise(value, scale) {
-  var j;
-  var sc = scale < 0 ? 0 : scale;
-  var strs = value.toString().split(".");
+  let j;
+  const sc = scale < 0 ? 0 : scale;
+  const strs = value.toString().split(".");
   if (strs.length < 2) {
     strs[1] = "";
   }
-  var fr_len = strs[1].length;
-  var res = value;
+  const fr_len = strs[1].length;
+  let res = value;
   if (fr_len > scale) {
     res = parseInt(strs[0] + strs[1], 10);
     for (j = fr_len - 1; j >= sc; --j) {
@@ -126,8 +126,8 @@ function roundHalfUpPrecise(value, scale) {
 }
 //оставим знаки после запятой, не округляя
 function breakDigits(value, scale) {
-  var out = null;
-  var strs = value.toString().split(".");
+  let out = null;
+  const strs = value.toString().split(".");
   if (strs.length < 2) {
     out = parseInt(strs[0], 10);
   } else {
@@ -149,9 +149,9 @@ function Period(period_string) {
   this.seconds = 0;
   this.millis = 0;
 
-  var a = period_string.split("T");
-  var val = "";
-  var i;
+  const a = period_string.split("T");
+  let val = "";
+  let i;
   if (a[0].length > 0) {
     for (i = 1; i < a[0].length; ++i) {
       if (a[0].charAt(i) == "Y") {
@@ -211,9 +211,9 @@ Period.prototype.getMillis = function () {
 };
 
 function isInt(str_value) {
-  var i;
+  let i;
   this.cipher = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  var res = true;
+  let res = true;
   for (i = 0; i < str_value.length; ++i) {
     if (!this.cipher.hasOwnProperty(str_value.charAt(i))) {
       res = false;
@@ -224,10 +224,10 @@ function isInt(str_value) {
 }
 
 function parseISODateTimeString(str) {
-  var res = null;
-  var a = str.split("T");
+  let res = null;
+  const a = str.split("T");
   if (a[0].length > 0) {
-    var d = a[0].split("-");
+    const d = a[0].split("-");
     if (d.length == 3) {
       if (isInt(d[0]) && isInt(d[1]) && isInt(d[2])) {
         res = new Date();
@@ -241,9 +241,9 @@ function parseISODateTimeString(str) {
         res.setMonth(parseInt(d[1], 10) - 1);
         res.setDate(parseInt(d[2], 10));
         if (a.length > 1) {
-          var t = a[1].split(":");
+          const t = a[1].split(":");
           if (t.length == 3) {
-            var sec = t[2].split(".");
+            const sec = t[2].split(".");
             if (sec.length > 1) {
               t[2] = sec[0];
               t[3] = sec[1];
@@ -291,11 +291,11 @@ DateEntity.prototype.round = function (date, precision) {
   if (date == null) {
     throw new Error("date parameter of DateEntity.prototype.round is null !");
   }
-  var lprecision =
+  const lprecision =
     typeof precision != "undefined" && !isNaN(precision) && precision != null
       ? precision
       : this.PRECISION;
-  var d = new Date(date.getTime());
+  const d = new Date(date.getTime());
   if (lprecision == DateEntity.PRECISION_DAY) {
     d.setHours(0);
     d.setMinutes(0);
@@ -332,13 +332,13 @@ DateEntity.prototype.parseRfcString = function (str, precision) {
   if (precision != null) {
     this.PRECISION = precision;
   }
-  var d = parseISODateTimeString(str);
+  const d = parseISODateTimeString(str);
   if (d != null) {
     this.START = this.round(d);
   } else {
     // Разбор периода
     // строка периода - start/duration/end
-    var tmp = str.split("/");
+    const tmp = str.split("/");
     if (tmp.length == 3) {
       this.START = this.round(parseISODateTimeString(tmp[0]));
       this.PERIOD = new Period(tmp[1]);
@@ -358,7 +358,7 @@ DateEntity.prototype.parseRfcString = function (str, precision) {
 };
 
 DateEntity.prototype.toString = function () {
-  var res = this.START != null ? this.START.print("%Y-%m-%d") : "";
+  let res = this.START != null ? this.START.print("%Y-%m-%d") : "";
   res =
     res + this.PERIOD != null
       ? (res.equals("") ? "" : "/") + this.PERIOD.toString()
@@ -386,18 +386,18 @@ DateEntity.prototype.toString = function () {
  * @return массив дат
  */
 DateEntity.prototype.getDates = function (limit) {
-  var curr = this.round(new Date());
-  var lim = limit == null ? new Date(curr.getTime()) : this.round(limit);
-  var dates = [];
+  const curr = this.round(new Date());
+  const lim = limit == null ? new Date(curr.getTime()) : this.round(limit);
+  const dates = [];
 
   if (this.PERIOD == null) {
     if (this.START != null) {
       dates.push(this.START);
     }
   } else {
-    var use_next = true;
-    var start;
-    var end;
+    let use_next = true;
+    let start;
+    let end;
     if (this.START != null && this.END != null) {
       start = this.START;
       end = this.END;
@@ -419,8 +419,8 @@ DateEntity.prototype.getDates = function (limit) {
       }
     }
 
-    var i = 0;
-    var gc;
+    let i = 0;
+    let gc;
     if (use_next) {
       gc = new Date(start.getTime());
       while (gc <= end) {
@@ -459,7 +459,7 @@ DateEntity.prototype.next = function (date, i) {
   if (this.PERIOD == null) {
     return null;
   }
-  var gc = new Date(date.getTime());
+  const gc = new Date(date.getTime());
 
   gc.setMilliseconds(gc.getMilliseconds() + this.PERIOD.getMillis() * i);
   gc.setSeconds(gc.getSeconds() + this.PERIOD.getSeconds() * i);
