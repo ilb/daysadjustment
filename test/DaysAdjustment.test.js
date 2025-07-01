@@ -232,5 +232,31 @@ describe('tests 2025', () => {
       const workDays = da.countWorkDay(startDate, endDate);
       expect(workDays).toBe(247);
     });
+
+    test('входные и праздничные дни 2026', () => {
+      // Новогодние каникулы
+      expect(da.isHD(new Date('2026-01-01'))).toBe(true);
+      expect(da.isHD(new Date('2026-01-02'))).toBe(true);
+      expect(da.isWE(new Date('2026-01-03'))).toBe(true);
+      expect(da.isWE(new Date('2026-01-04'))).toBe(true);
+      expect(da.isHD(new Date('2026-01-05'))).toBe(true);
+      expect(da.isHD(new Date('2026-01-06'))).toBe(true); 
+      expect(da.isHD(new Date('2026-01-07'))).toBe(true); // Рождество Христово
+      expect(da.isHD(new Date('2026-01-08'))).toBe(true); // Доп. выходной
+      expect(da.isHD(new Date('2026-01-09'))).toBe(false); // Рабочий день
+
+      expect(da.isHD(new Date('2026-02-23'))).toBe(true); // День защитника Отечества
+      expect(da.isWE(new Date('2026-03-08'))).toBe(true); // Международный женский день
+      expect(da.isHD(new Date('2026-03-09'))).toBe(true); // Доп. выходной
+      expect(da.isHD(new Date('2026-05-01'))).toBe(true); // 1 мая – Праздник Весны и Труда
+      expect(da.isWE(new Date('2026-05-02'))).toBe(true); // 2 мая – Суббота
+      expect(da.isHD(new Date('2026-05-08'))).toBe(false); // 8 мая 
+      expect(da.isHD(new Date('2026-05-09'))).toBe(true); // 9 мая – День Победы
+      expect(da.isHD(new Date('2026-06-12'))).toBe(true); // День России
+      expect(da.isWE(new Date('2026-06-13'))).toBe(true); // Суббота
+      expect(da.isHD(new Date('2026-11-03'))).toBe(false); // Рабочий день
+      expect(da.isHD(new Date('2026-11-04'))).toBe(true); // День народного единства
+      expect(da.isWE(new Date('2026-12-31'))).toBe(false); // Пока рассматриваем как рабочий день
+    });
   });
 });
